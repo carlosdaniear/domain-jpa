@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="webapp">
+		<class>pe.edu.cibertec.webapp.entity.Carreraprofesional</class>
+		<class>pe.edu.cibertec.webapp.entity.Categoria</class>
+		<class>pe.edu.cibertec.webapp.entity.Computadora</class>
+		<class>pe.edu.cibertec.webapp.entity.Detallecompu</class>
+		<class>pe.edu.cibertec.webapp.entity.Marca</class>
+		<class>pe.edu.cibertec.webapp.entity.Persona</class>
+		<class>pe.edu.cibertec.webapp.entity.Puntosventa</class>
+		<class>pe.edu.cibertec.webapp.entity.Usuario</class>
+		<class>pe.edu.cibertec.webapp.entity.Ordenador</class>
+	</persistence-unit>
+</persistence>

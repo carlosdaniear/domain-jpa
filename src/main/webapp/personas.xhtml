@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<p:growl id="growl" life="2000" showDetail="true" />
+
+		<p:panel id="panelPersonas" header="Gestionar Personas"
+			footer="Total #{personaView.personas.size()}" widgetVar="panelPanel">
+
+			<p:commandButton value="Listar" icon="fa fa-list"
+				action="#{personaView.init()}"  style="margin-right:10px;" update=":panelPersonas"/>
+				
+			<p:commandButton process="@this" value="Nuevo" icon="fa fa-plus"
+				oncomplete="PF('dialog').show();" update=":dialogId" >
+				<p:resetInput target=":dialogId" />		
+			</p:commandButton>
+
+			<p:dataTable var="per" value="#{personaView.personas}" style="margin-top:10px" rows="5" paginator="true">
+				<p:column headerText="ID">
+					<h:outputText value="#{per.idpersona}" />
+				</p:column>
+
+				<p:column headerText="APELLIDOS">
+					<h:outputText value="#{per.apellido}" />
+				</p:column>
+				
+				<p:column headerText="NOMBRES">
+					<h:outputText value="#{per.nombre}" />
+				</p:column>
+				
+				<p:column headerText="CELULAR">
+					<h:outputText value="#{per.celular}" />
+				</p:column>
+				
+						
+				<p:column headerText="DIRECCION">
+					<h:outputText value="#{per.direccion}" />
+				</p:column>
+				
+				
+				
+				
+				
+				<p:column headerText="OPCIONES">
+					<p:commandButton action="#{personaView.buscar(per.idpersona)}" icon="fa fa-refresh" oncomplete="PF('dialog').show();" 
+					style="margin-right:5px;" update="dialogId" />
+					
+					<p:commandButton action="#{personaView.eliminar(per)}" icon="fa fa-remove" update=":growl :panelPersonas" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+		<p:dialog id="dialogId" header="Nuevo" widgetVar="dialog" modal="true" style="position: absolute">
+			<h:panelGrid columns="2" cellpadding="3" style="margin-bottom:10px">
+			
+				<h:outputText value="Apellidos" />
+				<p:inputText value="#{personaView.persona.apellido}"/>
+				
+				<h:outputText value="Nombres" />
+				<p:inputText value="#{personaView.persona.nombre}"/>
+				
+				<h:outputText value="Celular" />
+				<p:inputText value="#{personaView.persona.celular}"/>
+
+				<h:outputText value="Dirección" />
+				<p:inputText value="#{personaView.persona.direccion}"/>		
+						
+			</h:panelGrid>
+			<p:commandButton value="Registrar"
+						action="#{personaView.registrar}" update=":growl :panelPersonas" oncomplete="PF('dialog').hide();" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

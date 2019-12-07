@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:panel id="basic" header="Gestionar Productos"
+			footer="Total #{productoView.productos.size()}">
+
+			<p:commandButton value="Listar" icon="fa fa-list" action="login"
+				style="margin-right:10px;" />
+
+			<p:commandButton value="Nuevo" icon="fa fa-plus"
+				onclick="PF('dialog').show();" />
+
+			<p:dataTable var="prod" value="#{productoView.productos}"
+				style="margin-top:10px">
+				<p:column headerText="ID">
+					<h:outputText value="#{prod.idProducto}" />
+				</p:column>
+
+				<p:column headerText="DESCRIPCIÓN">
+					<h:outputText value="#{prod.descripcion}" />
+				</p:column>
+
+				<p:column headerText="PRECIO">
+					<h:outputText value="#{prod.precio}" />
+				</p:column>
+
+				<p:column headerText="STOCK">
+					<h:outputText value="#{prod.stock}" />
+				</p:column>
+
+				<p:column headerText="CATEGORIA">
+					<h:outputText value="#{prod.categoria.descripcion}" />
+				</p:column>
+
+				<p:column headerText="OPCIONES">
+					<p:commandButton action="#{productoView.buscar(prod)}"
+						icon="fa fa-refresh" oncomplete="PF('dialog').show();"
+						style="margin-right:5px;" update="dialogId" />
+
+					<p:commandButton action="#{productoView.eliminar(prod)}"
+						icon="fa fa-remove" />
+				</p:column>
+			</p:dataTable>
+
+		</p:panel>
+
+		<p:dialog id="dialogId" header="Nuevo" widgetVar="dialog" modal="true">
+			<h:panelGrid columns="2" cellpadding="3" style="margin-bottom:10px;">
+				<h:outputText value="Descripción" />
+				<p:inputText value="#{productoView.producto.descripcion}" />
+				<h:outputText value="Precio" />
+				<p:inputText value="#{productoView.producto.precio}" />
+				<h:outputText value="Stock" />
+				<p:inputText value="#{productoView.producto.stock}" />
+				<h:outputText value="Fecha de Registro" />
+				<p:datePicker id="button"
+					value="#{productoView.producto.fecRegistro}" showIcon="true" locale="es" pattern="yyyy/MM/dd" />
+				<h:outputLabel value="Categoria" />
+				<p:selectOneMenu
+					value="#{productoView.producto.categoria.idCategoria}">
+					<f:selectItems value="#{categoriaView.categorias}" var="categoria"
+						itemLabel="#{categoria.descripcion}"
+						itemValue="#{categoria.idCategoria}" />
+				</p:selectOneMenu>
+
+<!-- 				<h:outputText value="Imagen" /> -->
+<!-- 				<p:fileUpload value="#{productoView.file}" mode="simple" -->
+<!-- 					skinSimple="true" /> -->
+<!-- 				<br /> -->
+<!--     			<p:commandButton value="Submit" ajax="false" action="#{productoView.upload}" /> -->
+					
+<!-- 		<p:fileUpload value="#{productoView.file}" mode="advanced" -->
+<!-- 								fileUploadListener="#{productoView.fileUploadListener}"></p:fileUpload> -->
+					
+<!-- 				<br /> -->
+<!-- 				<p:commandButton value="Submit" ajax="false" -->
+<!-- 					action="#{fileUploadView.upload}" disabled="true" /> -->
+			</h:panelGrid>
+			<p:commandButton value="Registrar" action="#{productoView.registrar}" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

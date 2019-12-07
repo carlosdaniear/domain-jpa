@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<body style="margin: 0px;">
+	<p:menu  toggleable="true" style="width:100%; left:0px;">
+
+		<p:submenu label="Sección de registros categorizados">
+				<p:menuitem value="Computadora" action="computadora" ajax="false"
+				icon="pi pi-times" />
+			<p:menuitem value="Categorias" action="categorias" ajax="false" icon="pi pi-times" />
+			<p:menuitem value="Marcas" action="marcas" ajax="false"
+				icon="pi pi-times" />
+			<p:menuitem value="Carrera Profesional" action="carrera" ajax="false"
+				icon="pi pi-times" />
+				
+			<p:menuitem value="Persona" action="personas" ajax="false"
+				icon="pi pi-times" />
+				
+			
+			<p:menuitem value="Usuario" action="usuarios" ajax="false"
+				icon="pi pi-times" />
+				
+			<p:menuitem value="Puntos de Venta" action="puntosventas" ajax="false"
+				icon="pi pi-times" />
+			
+		</p:submenu>
+		<p:submenu label="Accione de Administrador">
+			<p:menuitem value="Cerrar sesión" action="login" icon="pi pi-home" />
+		</p:submenu>
+	</p:menu>
+</body>
+</html>

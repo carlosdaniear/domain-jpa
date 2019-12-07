@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<p:growl id="growl" life="2000" showDetail="true" />
+
+		<p:panel id="panelCarrera" header="Gestionar Carreras profecionales"
+			footer="Total #{carreraView.carreraprofesionales.size()}" widgetVar="panelCarrera">
+
+			<p:commandButton value="Listar" icon="fa fa-list"
+				action="#{carreraView.init()}"  style="margin-right:10px;" update=":panelCarrera"/>
+				
+			<p:commandButton process="@this" value="Nuevo" icon="fa fa-plus"
+				oncomplete="PF('dialog').show();" update=":dialogId" >
+				<p:resetInput target=":dialogId" />		
+			</p:commandButton>
+
+			<p:dataTable var="carre" value="#{carreraView.carreraprofesionales}" style="margin-top:10px" rows="5" paginator="true">
+				<p:column headerText="ID">
+					<h:outputText value="#{carre.idcarreraprofe}" />
+				</p:column>
+
+				<p:column headerText="CARRERA">
+					<h:outputText value="#{carre.carrera}" />
+				</p:column>
+				<p:column headerText="DESCRIPCIÓN">
+					<h:outputText value="#{carre.infoadicional}" />
+				</p:column>
+				
+				<p:column headerText="OPCIONES">
+					<p:commandButton action="#{carreraView.buscar(carre.idcarreraprofe)}" icon="fa fa-refresh" oncomplete="PF('dialog').show();" 
+					style="margin-right:5px;" update="dialogId" />
+					
+					<p:commandButton action="#{carreraView.eliminar(carre)}" icon="fa fa-remove" update=":growl :panelCarrera" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+		<p:dialog id="dialogId" header="Nuevo" widgetVar="dialog" modal="true" style="position: absolute">
+			<h:panelGrid columns="2" cellpadding="3" style="margin-bottom:10px">
+				<h:outputText value="Carrera" />
+				<p:inputText id="username" value="#{carreraView.carreraprofesional.carrera}"/>
+				<h:outputText value="Descripción" />
+				<p:inputText id="carrera" value="#{carreraView.carreraprofesional.infoadicional}"/>
+			</h:panelGrid>
+			<p:commandButton value="Registrar"
+						action="#{carreraView.registrar}" update=":growl :panelCarrera" oncomplete="PF('dialog').hide();" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

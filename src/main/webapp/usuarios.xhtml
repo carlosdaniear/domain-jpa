@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<p:growl id="growl" life="2000" showDetail="true" />
+
+		<p:panel id="panelUsuarios" header="Gestionar Usuarios"
+			footer="Total #{userView.usuarios.size()}" widgetVar="panelPanel">
+
+			<p:commandButton value="Listar" icon="fa fa-list"
+				action="#{userView.init()}"  style="margin-right:10px;" update=":panelUsuarios"/>
+				
+			<p:commandButton process="@this" value="Nuevo" icon="fa fa-plus"
+				oncomplete="PF('dialog').show();" update=":dialogId" >
+				<p:resetInput target=":dialogId" />		
+			</p:commandButton>
+
+			<p:dataTable var="usu" value="#{userView.usuarios}" style="margin-top:10px" rows="5" paginator="true">
+				<p:column headerText="ID">
+					<h:outputText value="#{usu.iduser}" />
+				</p:column>
+				
+				<p:column headerText="Usuario">
+					<h:outputText value="#{usu.user}" />
+				</p:column>
+				
+				<p:column headerText="Contraseña">
+					
+					<h:outputText value="#{usu.password}"  />
+				</p:column>
+				
+				
+				
+				<p:column headerText="OPCIONES">
+					<p:commandButton action="#{userView.buscar(usu.idUser)}" icon="fa fa-refresh" oncomplete="PF('dialog').show();" 
+					style="margin-right:5px;" update="dialogId" />
+					
+					<p:commandButton action="#{userView.eliminar(usu)}" icon="fa fa-remove" update=":growl :panelUsuarios" />
+				</p:column>
+				
+				
+				
+				
+				
+			</p:dataTable>
+		</p:panel>
+
+		<p:dialog id="dialogId" header="Nuevo" widgetVar="dialog" modal="true" style="position: absolute">
+			<h:panelGrid columns="2" cellpadding="3" style="margin-bottom:10px">
+			
+				<h:outputText value="Usuario"/>
+	    			<p:inputText value="#{userView.user.user}" />
+				
+				<h:outputText value="Contraseña"/>
+	    			<p:inputText value="#{userView.user.password}" />
+				
+				
+				<h:outputText value="Persona"/>
+	    			<p:selectOneMenu value="#{userView.user.persona.idpersona}">
+	    				<f:selectItems var="persona" value="#{personaView.personas}"
+	    					itemLabel="#{persona.nombre}" itemValue="#{persona.idpersona}">
+	    				</f:selectItems>	    			
+	    			</p:selectOneMenu>	
+				
+					
+						
+			</h:panelGrid>
+			<p:commandButton value="Registrar"
+						action="#{userView.registrar}" update=":growl :panelUsuarios" oncomplete="PF('dialog').hide();" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

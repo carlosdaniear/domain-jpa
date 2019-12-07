@@ -1,0 +1,65 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<p:growl id="growl" life="2000" showDetail="true" />
+
+		<p:panel id="panelPuntoventa" header="Gestionar Punto de Ventas "
+			footer="Total #{puntosventaView.puntosventas.size()}" widgetVar="panelPuntoventa">
+
+			<p:commandButton value="Listar" icon="fa fa-list"
+				action="#{puntosventaView.init()}"  style="margin-right:10px;" update=":panelPuntoventa"/>
+				
+			<p:commandButton process="@this" value="Nuevo" icon="fa fa-plus"
+				oncomplete="PF('dialog').show();" update=":dialogId" >
+				<p:resetInput target=":dialogId" />		
+			</p:commandButton>
+
+			<p:dataTable var="punt" value="#{puntosventaView.puntosventas}" style="margin-top:10px" rows="5" paginator="true">
+				<p:column headerText="ID">
+					<h:outputText value="#{punt.idpuntosVenta}" />
+				</p:column>
+
+				<p:column headerText="DESCRIPCIÓN">
+					<h:outputText value="#{punt.descripcion}" />
+				</p:column>
+				<p:column headerText="CELULAR COMERCIAL">
+					<h:outputText value="#{punt.celularcomercial}" />
+				</p:column>
+				<p:column headerText="DIRECCION">
+					<h:outputText value="#{punt.direccion}" />
+				</p:column>
+				
+				<p:column headerText="OPCIONES">
+					<p:commandButton action="#{puntosventaView.buscar(punt.idpuntosVenta)}" icon="fa fa-refresh" oncomplete="PF('dialog').show();" 
+					style="margin-right:5px;" update="dialogId" />
+					
+					<p:commandButton action="#{puntosventaView.eliminar(punt)}" icon="fa fa-remove" update=":growl :panelPuntoventa" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+		<p:dialog id="dialogId" header="Nuevo" widgetVar="dialog" modal="true" style="position: absolute">
+			<h:panelGrid columns="2" cellpadding="3" style="margin-bottom:10px">
+				<h:outputText value="Descripción" />
+				<p:inputText id="desc" value="#{puntosventaView.puntosventa.descripcion}"/>
+				<h:outputText value="Celular Comercial" />
+				<p:inputText id="celular" value="#{puntosventaView.puntosventa.celularcomercial}"/>
+				<h:outputText value="Direccion" />
+				<p:inputText id="dire" value="#{puntosventaView.puntosventa.direccion}"/>
+			</h:panelGrid>
+			<p:commandButton value="Registrar"
+						action="#{puntosventaView.registrar}" update=":growl :panelPuntoventa" oncomplete="PF('dialog').hide();" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>
